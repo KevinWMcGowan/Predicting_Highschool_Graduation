@@ -15,9 +15,9 @@ colnames(data)
 # too make the data more interpretable, the column names will be inserted, and a table of definition
 # will be printed for reference:
 
-# step 1: Create table of varibles and definitions
-# Variable table pasted from data source (https://archive.ics.uci.edu/dataset/856/higher+education+students+performance+evaluation) 
-# and converted to a strings by adding quotes and commas to separate index from variable name and definition strings
+# step 1: Create table of variables and definitions
+  # Variable table pasted from data source (https://archive.ics.uci.edu/dataset/856/higher+education+students+performance+evaluation) 
+  # and converted to a strings by adding quotes and commas to separate index from variable name and definition strings
 
 variable_table <- tibble::tribble(
   ~Index, ~Variable, ~Definition,
@@ -81,12 +81,13 @@ if (isTRUE(comparison_result)) {
 # Verify column names for potential mismatch
 cat("\nColumn names in `data` but not in `data_clean`:\n")
 print(setdiff(colnames(data), colnames(data_clean)))
+# Code above confirms all 33 mismatch are column names.
 
 cat("\nColumn names in `data_clean` but not in `data`:\n")
 print(setdiff(colnames(data_clean), colnames(data)))
 #above shows both tables have the same number of columns and indices are aligned
 
-# Step 5: Final Check - Value Matching
+# Step 5: Value Matching
 # Compare row-by-row values between the datasets
 value_comparison <- data.frame(
   Index = 1:ncol(data),
@@ -97,7 +98,8 @@ value_comparison <- data.frame(
 
 print(value_comparison)
 
-#Value comparison shows a match for every row proving a successful change in column names
+#Value comparison shows a TRUE match for every row, proving a successful change in column names 
+#while preserving row values
 ################################################################################
 # Inspect current data set
 print(n=33,data_clean)
@@ -153,13 +155,11 @@ data_clean <- data_clean %>%
   )
 colnames(data_clean)
 ################################################################################
-# Exploratory data analysis
+## Exploratory data analysis
 
 nrow(data_clean)
 #we see we have only 145 students for training and testing. This small dataset posses some challenges 
 #like over fitting. Additoinally, our student sample is only engineering students limiting the generalizability of any findings we get.
-
-
 
 # Print the different grades students can get
 unique(variable_table$Definition[variable_table$Variable == "FinalGrade"])
@@ -167,6 +167,7 @@ unique(variable_table$Definition[variable_table$Variable == "FinalGrade"])
 unique(data_clean$FinalGrade)
 #with 8 unique values for final grade and only 145 students, classification will be difficult.
 #by coding values as either pass or fail, prediction could be stronger. 
+
 
 
 
